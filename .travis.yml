@@ -15,10 +15,13 @@ matrix:
   #power jobs
     - env: CC=gcc-7 CXX=g++-7 AR=gcc-ar-7 NM=gcc-nm-7 RANLIB=gcc-ranlib-7
       arch: ppc64le
+      dist: xenial
     - env: CC=gcc-5 CXX=g++-5 AR=gcc-ar-5 NM=gcc-nm-5 RANLIB=gcc-ranlib-5
       arch: ppc64le
+      dist: xenial
     - language: python
       arch: ppc64le
+      dist: xenial
       python: "3.6"
       name: Lint cmake files.
       install: pip3 install cmakelint
@@ -44,9 +47,12 @@ install:
     fi
 
 before_script:
-  - wget https://cmake.org/files/v3.15/cmake-3.15.2-Linux-x86_64.sh
-  - sudo sh cmake-3.15.2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir
-
+  - >
+    if ["$TRAVIS_CPU_ARCH" != ppc64le] ;
+    then 
+      wget https://cmake.org/files/v3.15/cmake-3.15.2-Linux-x86_64.sh;
+      sudo sh cmake-3.15.2-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir;
+    fi
 script:
   - PATH=/usr/local/bin:$PATH
   - LD_LIBRARY_PATH=${TRAVIS_BUILD_DIR}/lib:$LD_LIBRARY_PATH
