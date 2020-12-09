@@ -12,6 +12,17 @@ matrix:
       name: Lint cmake files.
       install: pip3 install cmakelint
       script: scripts/lint.sh
+  #power jobs
+    - env: CC=gcc-7 CXX=g++-7 AR=gcc-ar-7 NM=gcc-nm-7 RANLIB=gcc-ranlib-7
+      arch: ppc64le
+    - env: CC=gcc-5 CXX=g++-5 AR=gcc-ar-5 NM=gcc-nm-5 RANLIB=gcc-ranlib-5
+      arch: ppc64le
+    - language: python
+      arch: ppc64le
+      python: "3.6"
+      name: Lint cmake files.
+      install: pip3 install cmakelint
+      script: scripts/lint.sh
   allow_failures:
     - name: Lint cmake files.
   fast_finish: true
